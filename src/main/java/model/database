@@ -1,0 +1,8 @@
+create table word
+(
+    id           bigserial
+        constraint word_pk
+            primary key,
+    word         varchar(255) not null,
+    "translate " varchar(255) not null
+);

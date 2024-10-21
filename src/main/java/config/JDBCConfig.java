@@ -1,5 +1,6 @@
 package config;
 
+import model.Media;
 import model.Translation;
 
 import java.sql.*;
@@ -12,11 +13,13 @@ public class JDBCConfig {
     private final static String TRANSLATE_WORD = "SELECT \"translate \" FROM word WHERE word = ?";
     private final static String REVERSE_TRANSLATE = "SELECT word FROM word WHERE \"translate \" = ?";
     private final static String GET_HISTORY = "SELECT word, \"translate \" FROM word";
+    private static final String ADD_MEDIA = "INSERT INTO media (image, audio) VALUES (?, ?)";
+    private static final String GET_MEDIA = "SELECT * FROM media WHERE id = ?";
 
     public JDBCConfig() {
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/translation", "postgres", "root");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/servet", "postgres", "root");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -92,5 +95,35 @@ public class JDBCConfig {
         }
 
         return history;
+    }
+
+    // Метод для добавления фото и аудио в базу данных
+    public void addMedia(Media media) {
+        try (PreparedStatement pstmt = connection.prepareStatement(ADD_MEDIA)) {
+            pstmt.setBytes(1, media.getImage());
+            pstmt.setBytes(2, media.getAudio());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Метод для получения медиа по ID
+    public Media getMedia(Long id) {
+        Media media = null;
+        try (PreparedStatement pstmt = connection.prepareStatement(GET_MEDIA)) {
+            pstmt.setLong(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    media = new Media();
+                    media.setId(rs.getLong("id"));
+                    media.setImage(rs.getBytes("image"));
+                    media.setAudio(rs.getBytes("audio"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return media;
     }
 }

@@ -1,3 +1,4 @@
+import client.ClientConnectionServlet;
 import config.JDBCConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -20,12 +21,14 @@ public class MediaUploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Отправка HTML-формы для загрузки медиа
+        logClientAccess(req);
         getServletContext().getRequestDispatcher("/upload-media.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Part imagePart = req.getPart("image");
+        logClientAccess(req);
         Part audioPart = req.getPart("audio");
 
         byte[] imageBytes = convertPartToBytes(imagePart);
@@ -53,5 +56,12 @@ public class MediaUploadServlet extends HttpServlet {
             }
             return outputStream.toByteArray();
         }
+    }
+
+    private void logClientAccess(HttpServletRequest req) {
+        String clientIpAddress = req.getRemoteAddr();
+        int clientPort = req.getRemotePort();
+        String requestUrl = req.getRequestURI();
+        ClientConnectionServlet.logClientVisit(clientIpAddress, clientPort, requestUrl);
     }
 }

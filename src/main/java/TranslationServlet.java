@@ -1,3 +1,4 @@
+import client.ClientConnectionServlet;
 import config.JDBCConfig;
 
 import jakarta.servlet.ServletException;
@@ -17,6 +18,7 @@ public class TranslationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String word = req.getParameter("word");
+        logClientAccess(req);
         String translate = req.getParameter("translate");
 
         // Проверка на пустоту
@@ -37,5 +39,12 @@ public class TranslationServlet extends HttpServlet {
         // Здесь вы можете выполнить дополнительные действия, такие как перенаправление на страницу с результатами
         req.setAttribute("result", "Translation added: " + word + " -> " + translate);
         getServletContext().getRequestDispatcher("/result-page.jsp").forward(req, resp);
+    }
+
+    private void logClientAccess(HttpServletRequest req) {
+        String clientIpAddress = req.getRemoteAddr();
+        int clientPort = req.getRemotePort();
+        String requestUrl = req.getRequestURI();
+        ClientConnectionServlet.logClientVisit(clientIpAddress, clientPort, requestUrl);
     }
 }

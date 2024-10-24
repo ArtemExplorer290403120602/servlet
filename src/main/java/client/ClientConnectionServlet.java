@@ -29,4 +29,9 @@ public class ClientConnectionServlet extends HttpServlet {
     public static ConcurrentHashMap<String, Integer> getClientConnections() {
         return clientConnections;
     }
+
+    // Новый метод для логирования переходов клиентов
+    public static void logClientVisit(String ipAddress, int port, String path) {
+        System.out.println("Client accessed URL: " + path + " from IP: " + ipAddress + " and port: " + port);
+    }
 }

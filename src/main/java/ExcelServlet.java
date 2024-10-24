@@ -1,3 +1,4 @@
+import client.ClientConnectionServlet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,6 +17,7 @@ public class ExcelServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Создание новой книги Excel
+        logClientAccess(req);
         XSSFWorkbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Data");
 
@@ -42,5 +44,11 @@ public class ExcelServlet extends HttpServlet {
 
         // Закрытие книги
         workbook.close();
+    }
+    private void logClientAccess(HttpServletRequest req) {
+        String clientIpAddress = req.getRemoteAddr();
+        int clientPort = req.getRemotePort();
+        String requestUrl = req.getRequestURI();
+        ClientConnectionServlet.logClientVisit(clientIpAddress, clientPort, requestUrl);
     }
 }

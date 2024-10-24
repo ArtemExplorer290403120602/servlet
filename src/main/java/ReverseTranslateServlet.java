@@ -1,3 +1,4 @@
+import client.ClientConnectionServlet;
 import config.JDBCConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,11 +17,13 @@ public class ReverseTranslateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Простой запрос для отображения страницы обратного перевода
         getServletContext().getRequestDispatcher("/reverse-translate.jsp").forward(req, resp);
+        logClientAccess(req);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String translate = req.getParameter("translate");
+        logClientAccess(req);
 
         // Проверка на пустоту
         if (translate == null || translate.isBlank()) {
@@ -41,5 +44,12 @@ public class ReverseTranslateServlet extends HttpServlet {
 
         // Перенаправление обратно на страницу обратного перевода с результатом
         getServletContext().getRequestDispatcher("/reverse-translate.jsp").forward(req, resp);
+    }
+
+    private void logClientAccess(HttpServletRequest req) {
+        String clientIpAddress = req.getRemoteAddr();
+        int clientPort = req.getRemotePort();
+        String requestUrl = req.getRequestURI();
+        ClientConnectionServlet.logClientVisit(clientIpAddress, clientPort, requestUrl);
     }
 }

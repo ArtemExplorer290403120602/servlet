@@ -3,22 +3,25 @@
 <html>
 <head>
     <title>Translate Word</title>
+    <link rel="stylesheet" type="text/css" href="stylee.css">
 </head>
-<body style="background-color: beige">
-<h1 style="text-align: center">Translate English to Russian</h1>
-<hr>
-<div style="display: flex; justify-content: center;">
-    <form action="/translate" method="post">
-        <label for="word">English Word:</label>
-        <input type="text" id="word" name="word" required>
-        <br><br>
-        <input type="submit" value="Translate">
-    </form>
-</div>
-<div style="text-align: center;">
-    <c:if test="${not empty result}">
-        <h3>Translation: ${result}</h3>
-    </c:if>
+<body>
+<div class="container">
+    <h1 Translate English to Russian</h1>
+    <hr>
+    <div class="button-group">
+        <form action="/translate" method="post">
+            <label for="word">English Word:</label>
+            <input type="text" id="word" name="word" required>
+            <br><br>
+            <input type="submit" value="Перевести">
+        </form>
+    </div>
+    <div >
+        <c:if test="${not empty result}">
+            <h3>Translation: ${result}</h3>
+        </c:if>
+    </div>
 </div>
 </body>
 </html>

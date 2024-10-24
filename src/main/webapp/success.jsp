@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 123
-  Date: 21.10.2024
-  Time: 14:27
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,15 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Media</title>
+    <link rel="stylesheet" type="text/css" href="stylee.css">
 </head>
 <body>
-<h1>Upload Image and Audio</h1>
-<form action="/uploadMedia" method="post" enctype="multipart/form-data">
-    <label for="image">Image:</label>
-    <input type="file" id="image" name="image" accept="image/*" required><br><br>
-    <label for="audio">Audio:</label>
-    <input type="file" id="audio" name="audio" accept="audio/*" required><br><br>
-    <input type="submit" value="Upload">
-</form>
+<div class="container">
+    <h1>Upload Image and Audio</h1>
+    <div class="success-message">
+        <p>Ваша фотография и музыка успешно загрузились в базу данных!</p>
+    </div>
+    <div class="button-group">
+        <form action="/">
+            <input type="submit" value="Вернуться на главную">
+        </form>
+    </div>
+</div>
 </body>
 </html>

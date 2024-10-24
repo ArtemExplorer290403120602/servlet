@@ -9,7 +9,7 @@ import java.io.IOException;
 public class ServerInfoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String serverAddress = "127.0.0.1"; // Фиктивный IP
+        String serverAddress = "192.168.32.1"; // Фиктивный IP
         int serverPort = req.getLocalPort();
         req.setAttribute("serverAddress", serverAddress);
         req.setAttribute("serverPort", serverPort);

@@ -126,4 +126,35 @@ public class JDBCConfig {
         }
         return media;
     }
+
+    public Long getLastInsertedMediaId() {
+        Long id = null;
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT LASTVAL() as id")) {
+            if (rs.next()) {
+                id = rs.getLong("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    public List<Media> getAllMedia() {
+        List<Media> mediaList = new ArrayList<>();
+        String query = "SELECT * FROM media";
+        try (PreparedStatement pstmt = connection.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Media media = new Media();
+                media.setId(rs.getLong("id"));
+                media.setImage(rs.getBytes("image"));
+                media.setAudio(rs.getBytes("audio"));
+                mediaList.add(media);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mediaList;
+    }
 }

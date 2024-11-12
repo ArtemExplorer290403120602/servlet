@@ -60,5 +60,17 @@
         </div>
     </div>
 </div>
+<div class="container">
+    <h1>Upload Media from URL</h1>
+    <form action="/uploadMediaFromUrl" method="post">
+        <label for="imageUrl">Image URL:</label>
+        <input type="text" id="imageUrl" name="imageUrl" required><br><br>
+
+        <label for="audioUrl">Audio URL:</label>
+        <input type="text" id="audioUrl" name="audioUrl" required><br><br>
+
+        <input type="submit" value="Сохранить в БД">
+    </form>
+</div>
 </body>
 </html>

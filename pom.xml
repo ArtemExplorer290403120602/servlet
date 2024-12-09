@@ -33,6 +33,13 @@
       <version>5.2.3</version>
     </dependency>
     <dependency>
+      <groupId>com.jacob</groupId>
+      <artifactId>jacob</artifactId>
+      <version>1.21</version>
+      <scope>system</scope>
+      <systemPath>D:/Java/servlet/src/main/webapp/WEB-INF/lib/jacob.jar</systemPath>
+    </dependency>
+    <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi-ooxml</artifactId>
       <version>5.2.3</version>

@@ -57,6 +57,9 @@
             <form action="/downloadExcel" method="get">
                 <input type="submit" value="Загрузить файл excel">
             </form>
+            <form action="/createExcel" method="post">
+                <input type="submit" value="Загрузить файл excel - 2">
+            </form>
         </div>
     </div>
 </div>
